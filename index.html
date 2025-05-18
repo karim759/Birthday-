@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Best Friend Wishes from Karim</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #d4fc79, #96e6a1, #84fab0, #8fd3f4);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      height: 100%;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .page {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    .heart {
+      font-size: 5rem;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .balloon {
+      position: absolute;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-30vh); opacity: 0; }
+    }
+
+    .button {
+      padding: 10px 25px;
+      background: #34ace0;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      margin-top: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .message-text {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1.5s forwards;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      padding: 0 10px;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/02/audio_b8ba2d58f7.mp3" type="audio/mpeg">
+</audio>
+<audio id="clickSound">
+  <source src="https://www.soundjay.com/buttons/sounds/button-10.mp3" type="audio/mpeg">
+</audio>
+
+<div class="page active" id="page1">
+  <h2>Enter Your Name:</h2>
+  <input type="text" id="username" placeholder="Your name here">
+  <button class="button" onclick="startExperience()">Next</button>
+</div>
+
+<div class="page" id="page2">
+  <h1>Hey <span id="displayName"></span>!</h1>
+  <p>Here's something special for my favorite human and best buddy!</p>
+  <button class="button" onclick="goToPage(3)">Next</button>
+</div>
+
+<div class="page" id="page3">
+  <h2>Click the heart to begin!</h2>
+  <div class="heart" onclick="goToPage(4)">💖</div>
+  <div class="balloon" style="left: 10%; animation-delay: 0s;">🎈</div>
+  <div class="balloon" style="left: 40%; animation-delay: 2s;">🎈</div>
+  <div class="balloon" style="left: 70%; animation-delay: 1s;">🎈</div>
+</div>
+
+<div class="page" id="page4">
+  <h1>Happy You Day!</h1>
+  <p>This one's from Karim — your forever bestie!</p>
+  <button class="button" onclick="goToPage(5)">Next</button>
+</div>
+
+<div class="page" id="page5">
+  <h2>Tap to read your letters</h2>
+  <button class="button" onclick="goToPage(6)">Letter 1</button>
+  <button class="button" onclick="goToPage(7)">Letter 2</button>
+</div>
+
+<div class="page" id="page6">
+  <p class="message-text">You bring energy ⚡, smiles 😊, and sunshine ☀️ into every room. I’m lucky to call you my best friend! — Karim</p>
+  <button class="button" onclick="goToPage(8)">Next</button>
+</div>
+
+<div class="page" id="page7">
+  <p class="message-text">From silly laughs 😂 to deep talks 🗣️, you've been my rock! Here's to more memories, jokes, and joy ahead! — Your buddy forever, Karim ❤️</p>
+  <button class="button" onclick="goToPage(8)">Next</button>
+</div>
+
+<div class="page" id="page8">
+  <h2>A Friendly Rhyme</h2>
+  <p>You’re not just a star, you’re the whole galaxy 🌌 — weird, wonderful, and perfectly YOU!</p>
+  <button class="button" onclick="goToPage(9)">Next</button>
+</div>
+
+<div class="page" id="page9">
+  <h2>Thanks for Everything!</h2>
+  <p>Best friends like you make life ✨extra✨ fun! Grateful always!</p>
+  <h3>— Karim</h3>
+  <p>Stay awesome! 🌈</p>
+</div>
+
+<script>
+  function playClickSound() {
+    const clickSound = document.getElementById('clickSound');
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
+
+  function startExperience() {
+    const name = document.getElementById('username').value.trim();
+    if (name) {
+      document.getElementById('displayName').textContent = name;
+      const bgMusic = document.getElementById('bgMusic');
+      bgMusic.volume = 0.2;
+      bgMusic.play().catch(err => console.log("Autoplay issue"));
+      playClickSound();
+      showPage(2);
+    } else {
+      alert("Please enter your name!");
+    }
+  }
+
+  function goToPage(num) {
+    playClickSound();
+    showPage(num);
+    if (num === 9) launchConfetti();
+  }
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(`page${id}`).classList.add('active');
+  }
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = Array.from({length: 100}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 100,
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+      tilt: Math.random() * 10 - 10,
+      tiltAngle: 0,
+      tiltAngleIncremental: Math.random() * 0.07 + 0.05
+    }));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.lineWidth = c.r;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
+        ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r);
+        ctx.stroke();
+      });
+      update();
+      animationId = requestAnimationFrame(draw);
+    }
+
+    function update() {
+      confetti.forEach(c => {
+        c.y += Math.cos(c.d) + 1 + c.r / 2;
+        c.tiltAngle += c.tiltAngleIncremental;
+        c.tilt = Math.sin(c.tiltAngle - (c.d / 3)) * 15;
+        if (c.y > canvas.height) {
+          c.y = -10;
+          c.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    let animationId = requestAnimationFrame(draw);
+
+    setTimeout(() => {
+      cancelAnimationFrame(animationId);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, 5000);
+  }
+</script>
+</body>
+  </html>
+  
