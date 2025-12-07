@@ -1,257 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Best Friend Wishes from Karim</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(-45deg, #d4fc79, #96e6a1, #84fab0, #8fd3f4);
-      background-size: 400% 400%;
-      animation: gradientBG 20s ease infinite;
-      height: 100%;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Birthday Wishes for Mujeeba</title>
 
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
+<style>
+/* 🌸 BEAUTIFUL IMPROVED BACKGROUND 🌸 */
+body, html {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7, #ffc3e3, #ffd6ff);
+  background-size: 400% 400%;
+  animation: bgMove 12s ease infinite;
+  overflow-x: hidden;
+  color: #4a0033;
+}
 
-    .page {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-      padding: 20px;
-    }
+/* Animated pastel gradient */
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    .page.active {
-      display: flex;
-    }
+/* ✨ floating glitter effect */
+.glitter {
+  position: fixed;
+  width: 4px; height: 4px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: glitterFloat 6s infinite ease-in-out;
+  box-shadow: 0 0 10px white;
+}
 
-    .heart {
-      font-size: 5rem;
-      animation: bounce 2s infinite;
-      cursor: pointer;
-    }
+@keyframes glitterFloat {
+  0% { transform: translateY(0px) scale(1); opacity: 0.8; }
+  50% { transform: translateY(-40px) scale(1.4); opacity: 1; }
+  100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+}
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
+/* MAIN CONTAINER */
+.container {
+  max-width: 650px;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 0 1rem;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .balloon {
-      position: absolute;
-      animation: float 8s infinite ease-in-out;
-    }
+/* BUTTON STYLES */
+button {
+  font-size: 1.1rem;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(255,255,255,0.4);
+  color: #4a0033;
+  padding: 0.7rem 1.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: 0.3s;
+  font-weight: bold;
+}
 
-    @keyframes float {
-      0% { transform: translateY(100vh); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-30vh); opacity: 0; }
-    }
+button:hover:not(:disabled) {
+  background: rgba(255,255,255,0.55);
+  transform: scale(1.05);
+}
 
-    .button {
-      padding: 10px 25px;
-      background: #34ace0;
-      border: none;
-      border-radius: 15px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: white;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      margin-top: 15px;
-      transition: transform 0.2s ease;
-    }
+/* PAGE ANIMATIONS */
+.page {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  animation: fadeIn 0.6s ease forwards;
+}
+.page.active { display: flex; }
 
-    .button:hover {
-      transform: scale(1.1);
-    }
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 10;
-      pointer-events: none;
-    }
+/* ⭐ FIXED BIGGER CIRCLE PHOTO ⭐ */
+.circle-img {
+  width: 220px;   /* increased */
+  height: 220px;  /* increased */
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 0 30px #ff8ac6, 0 0 55px #ffb7e2;
+  animation: float 3s ease-in-out infinite;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .message-text {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1.5s forwards;
-      font-size: 1.3rem;
-      line-height: 1.6;
-      padding: 0 10px;
-    }
+.circle-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* better photo fill */
+  background: #fff;
+}
 
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* HEART ANIMATION */
+#heart {
+  font-size: 4.8rem;
+  color: #d6336c;
+  cursor: pointer;
+  margin: 2rem 0;
+  text-shadow: 0 0 25px #ff5ea9;
+}
+#heart.clicked { animation: heartbeat 1.2s infinite; }
+
+@keyframes heartbeat {
+  0%,100% {transform: scale(1);}
+  50% {transform: scale(1.35);}
+}
+
+/* POEM STYLE */
+#poem {
+  font-style: italic;
+  white-space: pre-line;
+  color: #74073d;
+  font-size: 1.3rem;
+  min-height: 6rem;
+  margin-top: 1.5rem;
+  text-shadow: 0 0 10px #ffe5f5;
+}
+
+/* ⭐ BIGGER MEMORY FRAMES ⭐ */
+.memory-frame {
+  width: 320px;   /* increased */
+  height: 320px;  /* increased */
+  border: 6px solid #ff9fce;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 1rem 0;
+  background: white;
+  box-shadow: 0 0 25px #ff7fbf, 0 0 35px #ffbde7;
+  animation: slideUp 0.9s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.memory-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills but no stretching */
+  background: #fff;
+}
+
+/* CONFETTI */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+}
+</style>
 </head>
 <body>
 
+<!-- GLITTER PARTICLES -->
+<script>
+for(let i=0;i<25;i++){
+  let g=document.createElement("div");
+  g.className="glitter";
+  g.style.left=Math.random()*100+"vw";
+  g.style.top=Math.random()*100+"vh";
+  g.style.animationDelay=(Math.random()*5)+"s";
+  document.body.appendChild(g);
+}
+</script>
+
+<div class="container">
+
+  <!-- PAGE 1 -->
+  <div class="page active" id="page1">
+    <div class="circle-img">
+      <img src="https://i.postimg.cc/wMfJT5GH/photo1.jpg" alt="Photo" />
+    </div>
+    <h1 style="text-shadow:0 0 12px #ffb0e6;">Happy Birthday, Mujeeba! 🎉</h1>
+    <p>You deserve all the happiness in the world 💖</p>
+    <button onclick="goToPage(2)">Start</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page" id="page2">
+    <h1>Dear Mujeeba,</h1>
+    <p>You make our life brighter with your smile.
+       You are caring, sweet, and very special. ❤️</p>
+    <button onclick="goToPage(3)">Next</button>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="page" id="page3">
+    <h2>Tap the heart ❤️</h2>
+    <div id="heart">&#10084;</div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="page" id="page4">
+    <h1>Lots of Love 💗</h1>
+    <p>I am always proud of you.
+       May your birthday be filled with joy. — Karim</p>
+    <button onclick="goToPage(5)">Next</button>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div class="page" id="page5">
+    <h2>Your Letters 💌</h2>
+    <button onclick="goToPage(6)">Letter 1</button>
+    <button onclick="goToPage(7)">Letter 2</button>
+  </div>
+
+  <!-- PAGE 6 -->
+  <div class="page" id="page6">
+    <p>My dear sister,
+       Thank you for being kind, caring, and loving.
+       You are a blessing to all of us.
+       — With love, Karim 💕</p>
+    <button onclick="goToPage(8)">Next</button>
+  </div>
+
+  <!-- PAGE 7 -->
+  <div class="page" id="page7">
+    <p>You are strong, smart, and full of goodness.
+       I pray all your dreams come true.
+       — Your brother Karim ❤️</p>
+    <button onclick="goToPage(8)">Next</button>
+  </div>
+
+  <!-- PAGE 8 -->
+  <div class="page" id="page8">
+    <h2>A Simple Poem 🌸</h2>
+    <div id="poem"></div>
+    <button id="nextAfterPoem" disabled>Next</button>
+  </div>
+
+  <!-- PAGE 9 -->
+  <div class="page" id="page9">
+    <h2>Beautiful Memories 📷💖</h2>
+
+    <div class="memory-frame">
+      <img src="https://i.postimg.cc/zfzcgn8j/IMG20250511073115.jpg">
+    </div>
+
+    <div class="memory-frame">
+      <img src="https://i.postimg.cc/pLYSr0bf/642d967b0f1a4ae9bf558db6768f9174.jpg">
+    </div>
+
+    <button onclick="goToPage(10)">Next</button>
+  </div>
+
+  <!-- PAGE 10 -->
+  <div class="page" id="page10">
+    <h2>Thank You, Sister! 💫</h2>
+    <p>You are very simple .
+       Always stay happy, healthy, and smiling. 🌈</p>
+    <h3>— With love, Karim 💖</h3>
+    <button onclick="goToPage(1)">Back to Start</button>
+  </div>
+
+</div>
+
+<!-- CONFETTI -->
 <canvas id="confetti-canvas"></canvas>
 
-<audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/02/audio_b8ba2d58f7.mp3" type="audio/mpeg">
-</audio>
-<audio id="clickSound">
-  <source src="https://www.soundjay.com/buttons/sounds/button-10.mp3" type="audio/mpeg">
-</audio>
-
-<div class="page active" id="page1">
-  <h2>Enter Your Name:</h2>
-  <input type="text" id="username" placeholder="Your name here">
-  <button class="button" onclick="startExperience()">Next</button>
-</div>
-
-<div class="page" id="page2">
-  <h1>Hey <span id="displayName"></span>!</h1>
-  <p>Here's something special for my favorite human and best buddy!</p>
-  <button class="button" onclick="goToPage(3)">Next</button>
-</div>
-
-<div class="page" id="page3">
-  <h2>Click the heart to begin!</h2>
-  <div class="heart" onclick="goToPage(4)">💖</div>
-  <div class="balloon" style="left: 10%; animation-delay: 0s;">🎈</div>
-  <div class="balloon" style="left: 40%; animation-delay: 2s;">🎈</div>
-  <div class="balloon" style="left: 70%; animation-delay: 1s;">🎈</div>
-</div>
-
-<div class="page" id="page4">
-  <h1>Happy You Day!</h1>
-  <p>This one's from Karim — your forever bestie!</p>
-  <button class="button" onclick="goToPage(5)">Next</button>
-</div>
-
-<div class="page" id="page5">
-  <h2>Tap to read your letters</h2>
-  <button class="button" onclick="goToPage(6)">Letter 1</button>
-  <button class="button" onclick="goToPage(7)">Letter 2</button>
-</div>
-
-<div class="page" id="page6">
-  <p class="message-text">You bring energy ⚡, smiles 😊, and sunshine ☀️ into every room. I’m lucky to call you my best friend! — Karim</p>
-  <button class="button" onclick="goToPage(8)">Next</button>
-</div>
-
-<div class="page" id="page7">
-  <p class="message-text">From silly laughs 😂 to deep talks 🗣️, you've been my rock! Here's to more memories, jokes, and joy ahead! — Your buddy forever, Karim ❤️</p>
-  <button class="button" onclick="goToPage(8)">Next</button>
-</div>
-
-<div class="page" id="page8">
-  <h2>A Friendly Rhyme</h2>
-  <p>You’re not just a star, you’re the whole galaxy 🌌 — weird, wonderful, and perfectly YOU!</p>
-  <button class="button" onclick="goToPage(9)">Next</button>
-</div>
-
-<div class="page" id="page9">
-  <h2>Thanks for Everything!</h2>
-  <p>Best friends like you make life ✨extra✨ fun! Grateful always!</p>
-  <h3>— Karim</h3>
-  <p>Stay awesome! 🌈</p>
-</div>
-
 <script>
-  function playClickSound() {
-    const clickSound = document.getElementById('clickSound');
-    clickSound.currentTime = 0;
-    clickSound.play();
-  }
+function goToPage(num){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+num).classList.add('active');
+}
 
-  function startExperience() {
-    const name = document.getElementById('username').value.trim();
-    if (name) {
-      document.getElementById('displayName').textContent = name;
-      const bgMusic = document.getElementById('bgMusic');
-      bgMusic.volume = 0.2;
-      bgMusic.play().catch(err => console.log("Autoplay issue"));
-      playClickSound();
-      showPage(2);
+const heart=document.getElementById('heart');
+heart.addEventListener('click',()=>{
+  heart.classList.add('clicked');
+  setTimeout(()=>{goToPage(4); heart.classList.remove('clicked');},2000);
+});
+
+const poemText =
+`You are sweet,
+You are kind,
+You are the best sister
+Anyone can find.`;
+
+function typePoem(){
+  const el=document.getElementById('poem');
+  el.textContent='';
+  let i=0;
+  function type(){
+    if(i<poemText.length){
+      el.textContent+=poemText.charAt(i);
+      i++; setTimeout(type,60);
     } else {
-      alert("Please enter your name!");
+      document.getElementById('nextAfterPoem').disabled=false;
     }
   }
+  type();
+}
 
-  function goToPage(num) {
-    playClickSound();
-    showPage(num);
-    if (num === 9) launchConfetti();
-  }
+document.getElementById('nextAfterPoem')
+  .addEventListener('click',()=>goToPage(9));
 
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(`page${id}`).classList.add('active');
-  }
-
-  function launchConfetti() {
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const confetti = Array.from({length: 100}, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      r: Math.random() * 6 + 4,
-      d: Math.random() * 100,
-      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
-      tilt: Math.random() * 10 - 10,
-      tiltAngle: 0,
-      tiltAngleIncremental: Math.random() * 0.07 + 0.05
-    }));
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confetti.forEach(c => {
-        ctx.beginPath();
-        ctx.lineWidth = c.r;
-        ctx.strokeStyle = c.color;
-        ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
-        ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r);
-        ctx.stroke();
-      });
-      update();
-      animationId = requestAnimationFrame(draw);
+const obs=new MutationObserver(m=>{
+  m.forEach(x=>{
+    if(x.target.id==='page8' && x.target.classList.contains('active')){
+      document.getElementById('nextAfterPoem').disabled=true;
+      typePoem();
     }
+  });
+});
+obs.observe(document.getElementById('page8'),{attributes:true,attributeFilter:['class']});
 
-    function update() {
-      confetti.forEach(c => {
-        c.y += Math.cos(c.d) + 1 + c.r / 2;
-        c.tiltAngle += c.tiltAngleIncremental;
-        c.tilt = Math.sin(c.tiltAngle - (c.d / 3)) * 15;
-        if (c.y > canvas.height) {
-          c.y = -10;
-          c.x = Math.random() * canvas.width;
-        }
-      });
-    }
+/* CONFETTI */
+const canvas=document.getElementById('confetti-canvas');
+const ctx=canvas.getContext('2d');
+let confetti=[];
+const colors=['#d6336c','#ffb6c1','#f8bbd0','#e91e63','#c2185b'];
 
-    let animationId = requestAnimationFrame(draw);
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+}
+resize(); addEventListener('resize',resize);
 
-    setTimeout(() => {
-      cancelAnimationFrame(animationId);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }, 5000);
-  }
+function newPiece(){
+  return {
+    x:Math.random()*canvas.width,
+    y:Math.random()*-canvas.height,
+    size:Math.random()*7+5,
+    color:colors[Math.floor(Math.random()*colors.length)],
+    speedY:Math.random()*3+2,
+    speedX:(Math.random()-0.5)*2,
+    tilt:Math.random()*10,
+    tiltSpeed:(Math.random()*0.1)+0.05
+  };
+}
+
+function initConfetti(){
+  confetti=[];
+  for(let i=0;i<80;i++) confetti.push(newPiece());
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  confetti.forEach(p=>{
+    p.tilt+=p.tiltSpeed; p.x+=p.speedX; p.y+=p.speedY;
+    if(p.y>canvas.height) p.y=-10, p.x=Math.random()*canvas.width;
+
+    ctx.fillStyle=p.color;
+    ctx.beginPath();
+    ctx.moveTo(p.x+p.tilt,p.y);
+    ctx.lineTo(p.x+p.tilt+p.size/2,p.y+p.size);
+    ctx.lineTo(p.x+p.tilt-p.size/2,p.y+p.size);
+    ctx.closePath(); ctx.fill();
+  });
+  requestAnimationFrame(draw);
+
+}
+
+function toggleConfetti(){
+  const active=document.querySelector('.page.active').id;
+  canvas.style.display = active==='page10' ? 'block':'none';
+}
+
+const pObs=new MutationObserver(toggleConfetti);
+document.querySelectorAll('.page')
+  .forEach(p=>pObs.observe(p,{attributes:true,attributeFilter:['class']}));
+
+initConfetti(); draw(); toggleConfetti();
 </script>
+
 </body>
-  </html>
-  
+</html>
