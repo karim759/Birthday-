@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mujeeba!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Vibrant Birthday Gradient */
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .heading-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        /* --- Global Animations --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-anim {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hidden-page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: scale(0.95);
+        }
+
+        .visible-page {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* --- Photo Gallery Styles --- */
+        .polaroid {
+            background: white;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transform: rotate(-3deg);
+            transition: transform 0.3s;
+        }
+        
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        /* --- Cake Page Styles & Animations --- */
+
+        /* Bouncing/Breathing Cake Animation */
+        @keyframes scale-up-down {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .bouncy-cake {
+            animation: scale-up-down 3s ease-in-out infinite;
+            transition: transform 0.5s ease-out; /* For the pop effect */
+        }
+        
+        /* Candle Flame Animation */
+        .flame {
+            animation: flicker 0.8s infinite alternate;
+            transform-origin: center bottom;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.98); opacity: 0.95; }
+            100% { transform: scale(1.02) rotate(1deg); opacity: 1; }
+        }
+
+        .flame-out {
+            opacity: 0 !important;
+            transition: opacity 0.3s;
+        }
+
+        /* Pop and Cut effect after blowing out */
+        @keyframes pop {
+            0% { transform: scale(1); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); }
+            50% { transform: scale(1.05); box-shadow: 0 16px 64px 0 rgba(31, 38, 135, 0.5); }
+            100% { transform: scale(1); }
+        }
+
+        .cake-cut {
+            animation: pop 0.4s ease-out 1;
+            /* Visual effect for the 'cut' */
+            box-shadow: inset 5px 0 10px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #f97316; /* Orange 'cut' line */
+        }
+
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+    <!-- Main Container -->
+    <div id="app" class="w-full max-w-md h-[85vh] relative">
+
+        <!-- PAGE 1: Welcome Screen -->
+        <div id="page1" class="visible-page flex-col items-center justify-center h-full text-center glass-card p-8">
+            <div class="float-anim text-6xl mb-6">🎂</div>
+            <h1 class="heading-font text-5xl text-purple-800 mb-2 font-bold">Happy Birthday!</h1>
+            <h2 class="text-2xl text-pink-600 font-semibold mb-8">Mujeeba</h2>
+            <p class="text-gray-700 mb-8">A special surprise awaits you...</p>
+            <button onclick="nextPage(2)" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95">
+                Open Gift 🎁
+            </button>
+        </div>
+
+        <!-- PAGE 2: Photo Gallery (Memories) - CORRECTED IMAGE PATHS -->
+        <div id="page2" class="hidden-page flex-col items-center justify-start h-full text-center glass-card p-8 overflow-y-auto">
+            <h2 class="heading-font text-4xl text-purple-800 mb-6 mt-4">Beautiful Memories 📸</h2>
+            
+            <div class="grid grid-cols-1 gap-6 w-full">
+                <!-- Photo 1: Snapchat Image -->
+                <div class="polaroid mx-auto w-64 cursor-pointer">
+                    <!-- CRITICAL FIX: Using the full file reference ID for access in this environment -->
+                    <img src="uploaded:Snapchat-1650152898.jpg-2968076f-ac25-4ada-b04c-965ded9ceb9c" 
+                         onerror="this.src='https://placehold.co/256x256/a6c1ee/FFFFFF?text=Snapchat+Pic'"
+                         alt="Memory 1 - Good Vibes" 
+                         class="w-full h-64 object-cover grayscale-0 rounded-sm">
+                    <div class="text-gray-600 font-handwriting mt-2 font-bold">Good Vibes ✨</div>
+                </div>
+
+                <!-- Photo 2: Camera Image -->
+                <div class="polaroid mx-auto w-64 cursor-pointer">
+                    <!-- CRITICAL FIX: Using the full file reference ID for access in this environment -->
+                    <img src="uploaded:IMG20251123121009.jpg-7183f265-be71-4339-8edf-798a4eed6210" 
+                         onerror="this.src='https://placehold.co/256x256/fbc2eb/FFFFFF?text=Family+Pic'"
+                         alt="Memory 2 - Brothers for Life" 
+                         class="w-full h-64 object-cover grayscale-0 rounded-sm">
+                    <div class="text-gray-600 font-handwriting mt-2 font-bold">Brothers for Life 🤜🤛</div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="absolute bottom-6 left-0 right-0 flex justify-center gap-4 px-6 z-10">
+                <button onclick="prevPage(1)" class="bg-gray-400 text-white p-3 rounded-full shadow-lg"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="nextPage(3)" class="bg-purple-600 hover:bg-purple-700 text-white p-3 px-6 rounded-full shadow-lg font-bold">Read Wishes <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+
+        <!-- PAGE 3: The Message -->
+        <div id="page3" class="hidden-page flex-col items-center justify-center h-full text-center glass-card p-8">
+            <h2 class="heading-font text-4xl text-pink-600 mb-6">Dear Mujeeba,</h2>
+            
+            <div class="bg-white/50 p-6 rounded-xl shadow-inner text-left max-h-96 overflow-y-auto mb-6">
+                <p class="text-gray-800 leading-relaxed mb-4">
+                    Happy Birthday to the most amazing sister in the world! 🌍✨
+                </p>
+                <p class="text-gray-800 leading-relaxed mb-4">
+                    May your day be filled with laughter, joy, and everything you love. You bring so much light into our lives, and I am so lucky to have you as my sister. 
+                </p>
+                <p class="text-gray-800 leading-relaxed">
+                    Keep shining bright like the star you are! 🌟💖
+                </p>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-center gap-4 w-full">
+                <button onclick="prevPage(2)" class="bg-gray-400 text-white p-3 rounded-full shadow-lg"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="nextPage(4)" class="bg-pink-500 hover:bg-pink-600 text-white p-3 px-6 rounded-full shadow-lg font-bold">Time for Cake! 🍰</button>
+            </div>
+        </div>
+
+        <!-- PAGE 4: Interactive Cake -->
+        <div id="page4" class="hidden-page flex-col items-center justify-center h-full text-center glass-card p-8">
+            <h2 class="heading-font text-4xl text-purple-800 mb-2">Make a Wish!</h2>
+            <p class="text-sm text-gray-600 mb-8">(Tap the flame to blow it out)</p>
+
+            <div id="cake-container" class="relative mt-4 mb-12 cursor-pointer group bouncy-cake" onclick="blowCandle()">
+                <!-- Candle Flame -->
+                <div id="flame" class="flame absolute -top-10 left-1/2 transform -translate-x-1/2 text-orange-500 text-5xl filter drop-shadow-[0_0_10px_rgba(255,165,0,0.8)]">
+                    🔥
+                </div>
+                <!-- Candle Stick -->
+                <div class="w-4 h-16 bg-red-400 mx-auto border-2 border-red-500 rounded-sm"></div>
+                <!-- Cake Body -->
+                <div id="cake-body" class="w-48 h-32 bg-pink-300 rounded-t-full relative border-4 border-white mt-1 flex items-center justify-center shadow-xl transition-all duration-500">
+                    <div class="absolute w-full h-8 bg-pink-400 top-1/2 transform -translate-y-1/2 opacity-30"></div>
+                    <span id="cake-emoji" class="text-3xl transition-transform duration-500">🧁</span>
+                </div>
+                <!-- Plate -->
+                <div class="w-60 h-4 bg-gray-200 rounded-full mx-auto mt-1 shadow-md"></div>
+            </div>
+
+            <div id="wish-message" class="opacity-0 transition-opacity duration-1000 text-xl font-bold text-purple-700 mb-8">
+                Yay! May all your wishes come true! ✨
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-center gap-4 w-full">
+                <button onclick="prevPage(3)" class="bg-gray-400 text-white p-3 rounded-full shadow-lg"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="nextPage(5)" class="bg-indigo-600 hover:bg-indigo-700 text-white p-3 px-6 rounded-full shadow-lg font-bold">Final Surprise <i class="fas fa-heart ml-2"></i></button>
+            </div>
+        </div>
+
+        <!-- PAGE 5: Credits / Signature -->
+        <div id="page5" class="hidden-page flex-col items-center justify-center h-full text-center glass-card p-8">
+            <div class="text-6xl mb-6 animate-bounce">🎁</div>
+            <h2 class="heading-font text-5xl text-purple-900 mb-4">Enjoy Your Day!</h2>
+            <p class="text-lg text-gray-700 mb-2">Sending you hugs and love.</p>
+            
+            <div class="mt-12 p-6 border-2 border-dashed border-purple-300 rounded-xl bg-white/40 transform rotate-2">
+                <p class="text-sm text-gray-500 uppercase tracking-widest mb-2">Designed with ❤️ by</p>
+                <h3 class="heading-font text-4xl text-indigo-700">Brother Karim</h3>
+            </div>
+
+            <button onclick="location.reload()" class="mt-12 text-sm text-gray-500 hover:text-purple-600 underline">
+                Replay from Start ↺
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Store current page
+        let currentPage = 1;
+        
+        function nextPage(pageNumber) {
+            // Hide current page
+            const currentEl = document.getElementById(`page${currentPage}`);
+            currentEl.classList.remove('visible-page');
+            currentEl.classList.add('hidden-page');
+            
+            // Update page number
+            currentPage = pageNumber;
+
+            // Show new page with small delay for animation
+            setTimeout(() => {
+                currentEl.style.display = 'none'; // Ensure it's gone from flow
+                
+                const nextEl = document.getElementById(`page${currentPage}`);
+                nextEl.style.display = 'flex'; // Bring back to flow
+                
+                // Force reflow
+                void nextEl.offsetWidth; 
+                
+                nextEl.classList.remove('hidden-page');
+                nextEl.classList.add('visible-page');
+
+                // Trigger Confetti on Page 1 transition and Last Page
+                if(pageNumber === 2 || pageNumber === 5) {
+                    launchConfetti();
+                }
+            }, 300);
+        }
+
+        function prevPage(pageNumber) {
+             // Hide current page
+             const currentEl = document.getElementById(`page${currentPage}`);
+            currentEl.classList.remove('visible-page');
+            currentEl.classList.add('hidden-page');
+            
+            currentPage = pageNumber;
+
+            setTimeout(() => {
+                currentEl.style.display = 'none';
+                const prevEl = document.getElementById(`page${currentPage}`);
+                prevEl.style.display = 'flex';
+                void prevEl.offsetWidth; 
+                prevEl.classList.remove('hidden-page');
+                prevEl.classList.add('visible-page');
+            }, 300);
+        }
+
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            const message = document.getElementById('wish-message');
+            const cakeContainer = document.getElementById('cake-container');
+            const cakeBody = document.getElementById('cake-body');
+            const cakeEmoji = document.getElementById('cake-emoji');
+
+            // Check if the candle is still lit
+            if(!flame.classList.contains('flame-out')) {
+                // 1. Blow out flame
+                flame.classList.add('flame-out');
+                
+                // 2. Stop the floating animation and trigger the 'cut' visual
+                cakeContainer.classList.remove('bouncy-cake');
+                cakeBody.classList.add('cake-cut');
+                
+                // 3. Change emoji to reflect the cake is cut
+                cakeEmoji.textContent = '🔪';
+                
+                // 4. Show message
+                message.classList.remove('opacity-0');
+                
+                // 5. Launch confetti
+                launchConfetti();
+            }
+        }
+
+        function launchConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var random = function(min, max) {
+            return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            var particleCount = 50 * (timeLeft / duration);
+            // since particles fall down, start a bit higher than random
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
